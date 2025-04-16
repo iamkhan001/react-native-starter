@@ -1,25 +1,23 @@
 import React, {useEffect, useState} from 'react';
 import {Provider} from 'react-redux';
-import {PersistGate} from 'redux-persist/integration/react';
-import { KeyboardProvider } from 'react-native-keyboard-controller';
-import {NavigationContainer} from '@react-navigation/native';
-
-import { I18nextProvider } from 'react-i18next';
-import i18n from './src/translations/i18n';
-
-
-import {store, persister} from './src/redux/store';
-import RootNavigator from './src/navigation/RootNavigator';
-import ErrorModal from './src/components/error/GlobalErrorModal';
-import ErrorBoundary from './src/components/error/ErrorBoundary';
 import {
   initialWindowMetrics,
   SafeAreaProvider,
 } from 'react-native-safe-area-context';
-import type {ErrorInfo} from './src/components/error/GlobalErrorModal';
+import {PersistGate} from 'redux-persist/integration/react';
+import {KeyboardProvider} from 'react-native-keyboard-controller';
+import {I18nextProvider} from 'react-i18next';
+import i18n from './src/translations/i18n';
+import {store, persister} from './src/redux/store';
+import ErrorModal from './src/components/error/GlobalErrorModal';
+import ErrorBoundary from './src/components/error/ErrorBoundary';
+import AppNavigatorStack from './src/navigation/AppNavigatorStack';
 
+import type {ErrorInfo} from './src/components/error/GlobalErrorModal';
+import BaseLayout from './src/components/layout/base/base.layout.ui';
 
 const App: React.FC = () => {
+
   const [errorInfo, setErrorInfo] = useState<ErrorInfo | null>(null);
 
   useEffect(() => {
@@ -42,10 +40,12 @@ const App: React.FC = () => {
           <PersistGate loading={null} persistor={persister}>
             <KeyboardProvider>
               <I18nextProvider i18n={i18n}>
-                <NavigationContainer>
-                  <RootNavigator />
-                </NavigationContainer>
-                <ErrorModal errorInfo={errorInfo} resetApp={resetApp} />
+                <BaseLayout>
+                  <AppNavigatorStack />
+                </BaseLayout>
+                {errorInfo && (
+                  <ErrorModal errorInfo={errorInfo} resetApp={resetApp} />
+                )}
               </I18nextProvider>
             </KeyboardProvider>
           </PersistGate>

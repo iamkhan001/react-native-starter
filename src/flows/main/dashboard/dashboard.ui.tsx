@@ -1,10 +1,11 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
-import HomeScreen from '../home/HomeScreen';
-import SettingsScreen from '../settings/SettingScreen';
+import HomeScreen from '../home/home.ui';
+import SettingsScreen from '../settings/settings.ui';
 import CustomTabBar from './components/CustomTabBar';
-import DesignSystem from '../../design';
+import DesignSystem from '../../../design';
+import { useTranslation } from 'react-i18next';
 
 const Tab = createBottomTabNavigator();
 
@@ -14,6 +15,8 @@ const CustomTabBarWrapper = (props: BottomTabBarProps) => {
 
 const DashboardScreen = () => {
 
+  const {t} = useTranslation();
+
   return (
     <Tab.Navigator
       screenOptions={{headerShown: false}}
@@ -22,7 +25,7 @@ const DashboardScreen = () => {
         name="Home"
         component={HomeScreen}
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: t('home'),
           tabBarIcon: DesignSystem.Icons.home,
         }}
       />
@@ -30,7 +33,7 @@ const DashboardScreen = () => {
         name="Settings"
         component={SettingsScreen}
         options={{
-          tabBarLabel: 'Settings',
+          tabBarLabel: t('settings'),
           tabBarIcon: DesignSystem.Icons.settings,
         }}
       />

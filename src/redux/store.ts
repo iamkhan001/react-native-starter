@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import themeReducer from './slices/themeSlice';
 import languageReducer from './slices/languageSlice';
+import authReducer from './slices/authSlice';
 
 import {
   persistStore,
@@ -26,6 +27,7 @@ export const store = configureStore({
   reducer: {
     theme: persistedReducer,
     language: languageReducer,
+    auth: authReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

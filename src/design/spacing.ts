@@ -5,5 +5,5 @@ const Spacing = {
     lg: 24,
     xl: 32,
   };
-  
+
   export default Spacing;

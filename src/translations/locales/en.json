@@ -4,5 +4,18 @@
   "yes": "Yes",
   "no": "No",
   "english": "English",
-  "Arabic": "Arabic"
+  "Arabic": "Arabic",
+  "languageSettings": "Language Settings",
+  "home": "Home",
+  "settings": "Settings",
+  "dashboard": "Dashboard",
+  "buttonExample": "Button Example",
+  "inputExample": "Input Example",
+  "selectExample": "Select Example",
+  "checkboxExample": "Checkbox Example",
+  "textExample": "Text Example",
+  "changeLanguage": "Change Language",
+  "changeTheme": "Change Theme",
+  "darkMode": "Dark Mode",
+  "lightMode": "Light Mode"
 }

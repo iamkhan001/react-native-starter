@@ -5,6 +5,9 @@ interface ThemeColors {
     textPrimary: string;
     textSecondary: string;
     error: string;
+    header: string;
+    headerText: string;
+    headerIcon: string;
 }
 
 export default ThemeColors;

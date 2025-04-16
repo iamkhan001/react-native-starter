@@ -4,5 +4,18 @@
   "yes": "نعم",
   "no": "لا",
   "english": "الإنجليزية",
-  "Arabic": "العربية"
+  "Arabic": "العربية",
+  "languageSettings": "إعدادات اللغة",
+  "home": "الرئيسية",
+  "settings": "الإعدادات",
+  "dashboard": "لوحة التحكم",
+  "buttonExample": "مثال على الزر",
+  "inputExample": "مثال على الإدخال",
+  "selectExample": "مثال على القائمة المنسدلة",
+  "checkboxExample": "مثال على خانة الاختيار",
+  "textExample": "مثال على النص",
+  "changeLanguage": "تغيير اللغة",
+  "changeTheme": "تغيير السمة",
+  "darkMode": "الوضع المظلم",
+  "lightMode": "الوضع الفاتح"
 }

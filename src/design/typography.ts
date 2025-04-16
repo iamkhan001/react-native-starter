@@ -1,8 +1,15 @@
+import { TextStyle } from 'react-native';
+
 const Typography = {
     fontFamily: {
       regular: 'System',
       medium: 'System',
       bold: 'System',
+    },
+    fontWeight: {
+      regular: '400' as TextStyle['fontWeight'],
+      medium: '500' as TextStyle['fontWeight'],
+      bold: '700' as TextStyle['fontWeight'],
     },
     fontSize: {
       xs: 12,

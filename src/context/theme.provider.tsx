@@ -10,7 +10,9 @@ const ThemeContext = createContext({
   setTheme: (_: ThemeType) => {},
 });
 
-export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
+const RawThemeContext = ThemeContext;
+
+const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const currentTheme = useSelector((state: RootState) => state.theme.theme);
   const dispatch = useDispatch();
   const colors = Themes[currentTheme];
@@ -28,4 +30,7 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export const useTheme = () => useContext(ThemeContext);
+
+const useTheme = () => useContext(ThemeContext);
+
+export { ThemeProvider, useTheme, RawThemeContext };
