@@ -17,5 +17,7 @@
   "changeLanguage": "تغيير اللغة",
   "changeTheme": "تغيير السمة",
   "darkMode": "الوضع المظلم",
-  "lightMode": "الوضع الفاتح"
+  "lightMode": "الوضع الفاتح",
+  "login": "تسجيل الدخول",
+  "register": "يسجل"
 }

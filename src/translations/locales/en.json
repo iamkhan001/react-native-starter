@@ -17,5 +17,7 @@
   "changeLanguage": "Change Language",
   "changeTheme": "Change Theme",
   "darkMode": "Dark Mode",
-  "lightMode": "Light Mode"
+  "lightMode": "Light Mode",
+  "login": "Login",
+  "register": "Register"
 }

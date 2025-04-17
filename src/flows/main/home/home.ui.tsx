@@ -1,35 +1,20 @@
-import { useContext, useEffect } from 'react';
-import { Text, View } from 'react-native';
+import { Button, Text, View } from 'react-native';
 import ENV from '../../../config/env';
-import { useTranslation } from 'react-i18next';
-import { BaseLayoutContext } from '../../../context/layout/base.layout.context';
-import { RootState } from '../../../redux/store';
-import { useSelector } from 'react-redux';
-import DesignSystem from '../../../design';
+import { useHomeLogic } from './home.logic';
 
 const HomeScreen = () => {
-  const { t } = useTranslation();
-  const { updateHeader } = useContext(BaseLayoutContext);
-  const user = useSelector(
-    (state: RootState) => state.auth.user,
-  );
 
-  useEffect(() => {
-    updateHeader({
-      title: t('Home'),
-      leftIcon: DesignSystem.Icons.home,
-      rightIcon: DesignSystem.Icons.settings,
-      onLeftPress: () => console.log('Menu opened'),
-    });
-
-    return () => {
-      console.log('HomeScreen unmounted');
-    };
-  }, []);
+  const {t, user, getScreenInfo, goToButtonExample, getToTextExample } = useHomeLogic();
 
   return (
       <View>
         <Text>{t('welcome')} {user?.firstName ?? 'Guest'} - {ENV.environment}</Text>
+        <Text>{t('screenInfo')}</Text>
+        <Text>{getScreenInfo?.()?.width} x {getScreenInfo?.()?.height}</Text>
+        <Text>{t('platform')}</Text>
+        <Text>{getScreenInfo?.()?.platform}</Text>
+        <Button title={t('buttonExample')} onPress={goToButtonExample} />
+        <Button title={t('textExample')} onPress={getToTextExample} />
       </View>
   );
 };

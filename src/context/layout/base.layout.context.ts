@@ -4,7 +4,7 @@ import { ScreenInfo } from '../../components/layout/base/base.layout.types';
 type BaseHeaderConfig = {
     title: string;
     leftIcon?: string;
-    rightIcon?: string;
+    rightIcon?: string | null;
     onLeftPress?: () => void;
     onRightPress?: () => void;
 };
