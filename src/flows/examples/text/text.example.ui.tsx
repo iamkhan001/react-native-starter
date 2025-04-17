@@ -3,11 +3,11 @@ import { useTextExampleLogic } from './text.example.logic';
 
 const TextExampleScreen = () => {
 
-  const {t} = useTextExampleLogic();
+  const {t, styles} = useTextExampleLogic();
 
   return (
-    <View>
-      <Text>{t('textExample')}</Text>
+    <View style={styles.container}>
+      <Text style={styles.text}>{t('textExample')}</Text>
     </View>
   );
 };

@@ -4,17 +4,21 @@ import { useHomeLogic } from './home.logic';
 
 const HomeScreen = () => {
 
-  const {t, user, getScreenInfo, goToButtonExample, getToTextExample } = useHomeLogic();
+  const {t, styles, user, getScreenInfo, goToButtonExample, getToTextExample } = useHomeLogic();
 
   return (
-      <View>
-        <Text>{t('welcome')} {user?.firstName ?? 'Guest'} - {ENV.environment}</Text>
-        <Text>{t('screenInfo')}</Text>
-        <Text>{getScreenInfo?.()?.width} x {getScreenInfo?.()?.height}</Text>
-        <Text>{t('platform')}</Text>
-        <Text>{getScreenInfo?.()?.platform}</Text>
-        <Button title={t('buttonExample')} onPress={goToButtonExample} />
-        <Button title={t('textExample')} onPress={getToTextExample} />
+      <View style={styles.container}>
+        <Text style={styles.text}>{t('welcome')} {user?.firstName ?? 'Guest'} - {ENV.environment}</Text>
+        <Text style={styles.text}>{t('screenInfo')}</Text>
+        <Text style={styles.text}>{getScreenInfo?.()?.width} x {getScreenInfo?.()?.height}</Text>
+        <Text style={styles.text}>{t('platform')}</Text>
+        <Text style={styles.text}>{getScreenInfo?.()?.platform}</Text>
+        <View style={styles.button}>
+          <Button  title={t('buttonExample')} onPress={goToButtonExample} />
+        </View>
+        <View style={styles.button}>
+          <Button title={t('textExample')} onPress={getToTextExample} />
+        </View>
       </View>
   );
 };

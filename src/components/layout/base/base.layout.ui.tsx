@@ -1,14 +1,27 @@
-import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Image, Dimensions, Platform } from 'react-native';
-import { RootLayoutProps, RootLayoutState, ScreenInfo } from './base.layout.types';
-import { BaseHeaderConfig, BaseLayoutContext } from '../../../context/layout/base.layout.context';
+import React, {Component} from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  Dimensions,
+  Platform,
+} from 'react-native';
+import {
+  RootLayoutProps,
+  RootLayoutState,
+  ScreenInfo,
+} from './base.layout.types';
+import {
+  BaseHeaderConfig,
+  BaseLayoutContext,
+} from '../../../context/layout/base.layout.context';
 import createStyles from './base.layout.styles';
-import { RawThemeContext } from '../../../context/theme.provider';
+import {RawThemeContext} from '../../../context/theme.provider';
 import DesignSystem from '../../../design';
 import LightColors from '../../../theme/colors/LightColors';
 
 class BaseLayout extends Component<RootLayoutProps, RootLayoutState> {
-
   static contextType = RawThemeContext;
 
   constructor(props: RootLayoutProps) {
@@ -30,15 +43,29 @@ class BaseLayout extends Component<RootLayoutProps, RootLayoutState> {
   }
 
   updateHeader = (config: BaseHeaderConfig) => {
-    this.setState({ header: { ...this.state.header, ...config } });
+    this.setState({header: {...this.state.header, ...config}});
   };
 
   componentDidMount() {
     const theme = this.context as React.ContextType<typeof RawThemeContext>;
     const styles = createStyles(theme.colors);
-    this.setState({ styles });
+    this.setState({styles});
     this.state.onMount?.();
     this.state.onRender?.();
+  }
+
+  componentDidUpdate(prevProps: RootLayoutProps, prevState: RootLayoutState) {
+    const currentTheme = this.context as React.ContextType<
+      typeof RawThemeContext
+    >;
+
+    if (
+      prevState.styles?.container?.backgroundColor !==
+      currentTheme.colors?.background
+    ) {
+      const updatedStyles = createStyles(currentTheme.colors);
+      this.setState({styles: updatedStyles});
+    }
   }
 
   componentWillUnmount() {
@@ -49,12 +76,12 @@ class BaseLayout extends Component<RootLayoutProps, RootLayoutState> {
     this.state.onError?.(error);
   }
 
-  showLoading = () => this.setState({ isLoading: true });
+  showLoading = () => this.setState({isLoading: true});
 
-  hideLoading = () => this.setState({ isLoading: false });
+  hideLoading = () => this.setState({isLoading: false});
 
   getScreenInfo = (): ScreenInfo => {
-    const { width, height } = Dimensions.get('window');
+    const {width, height} = Dimensions.get('window');
     return {
       width,
       height,
@@ -63,14 +90,9 @@ class BaseLayout extends Component<RootLayoutProps, RootLayoutState> {
   };
 
   render() {
-    const { children } = this.props;
-    const {
-        title,
-        leftIcon,
-        rightIcon,
-        onLeftPress,
-        onRightPress,
-     } = this.state.header;
+    const {children} = this.props;
+    const {title, leftIcon, rightIcon, onLeftPress, onRightPress} =
+      this.state.header;
 
     return (
       <BaseLayoutContext.Provider
@@ -79,15 +101,16 @@ class BaseLayout extends Component<RootLayoutProps, RootLayoutState> {
           showLoading: this.showLoading,
           hideLoading: this.hideLoading,
           isLoading: this.state.isLoading,
-        }}
-      >
+        }}>
         <View style={this.state.styles.container}>
           {/* Header */}
           <View style={this.state.styles.header}>
             {leftIcon && (
               <TouchableOpacity onPress={onLeftPress}>
                 <Image
-                  source={typeof leftIcon === 'string' ? { uri: leftIcon } : leftIcon}
+                  source={
+                    typeof leftIcon === 'string' ? {uri: leftIcon} : leftIcon
+                  }
                   style={this.state.styles.icon}
                 />
               </TouchableOpacity>
@@ -96,12 +119,14 @@ class BaseLayout extends Component<RootLayoutProps, RootLayoutState> {
             {rightIcon ? (
               <TouchableOpacity onPress={onRightPress}>
                 <Image
-                  source={typeof rightIcon === 'string' ? { uri: rightIcon } : rightIcon}
+                  source={
+                    typeof rightIcon === 'string' ? {uri: rightIcon} : rightIcon
+                  }
                   style={this.state.styles.icon}
                 />
               </TouchableOpacity>
             ) : (
-              <View style={{ width: DesignSystem.Sizes.headerIconSize }} />
+              <View style={{width: DesignSystem.Sizes.headerIconSize}} />
             )}
           </View>
 
@@ -109,10 +134,10 @@ class BaseLayout extends Component<RootLayoutProps, RootLayoutState> {
           {children}
           {/* Show loading */}
           {this.state.isLoading && (
-          <View style={this.state.styles.loadingOverlay}>
-            <Text>Loading...</Text>
-          </View>
-        )}
+            <View style={this.state.styles.loadingOverlay}>
+              <Text style={this.state.styles.title}>Loading...</Text>
+            </View>
+          )}
         </View>
       </BaseLayoutContext.Provider>
     );

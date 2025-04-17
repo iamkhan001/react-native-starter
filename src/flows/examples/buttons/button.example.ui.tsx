@@ -3,11 +3,11 @@ import { useButtonExampleLogic } from './button.example.logic';
 
 const ButtonsExampleScreen = () => {
 
-  const { t } = useButtonExampleLogic();
+  const { t, styles } = useButtonExampleLogic();
 
   return (
-    <View>
-      <Text>{t('buttonExample')}</Text>
+    <View style={styles.container}>
+      <Text style={styles.text}>{t('buttonExample')}</Text>
     </View>
   );
 };

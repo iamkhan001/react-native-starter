@@ -30,3 +30,5 @@ type ScreenInfo = {
 };
 
 export type { RootLayoutProps, RootLayoutState, ScreenInfo};
+
+  export type { BaseHeaderConfig };

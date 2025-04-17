@@ -19,10 +19,12 @@ const createStyles = (theme: ThemeColors) => {
     title: {
         fontSize: DesignSystem.Typography.fontSize.lg,
         fontWeight: DesignSystem.Typography.fontWeight.bold,
+        color: theme.textPrimary,
     },
     icon: {
         width: DesignSystem.Sizes.headerIconSize,
         height: DesignSystem.Sizes.headerIconSize,
+        tintColor: theme.primary,
     },
     loadingOverlay: {
       ...StyleSheet.absoluteFillObject,

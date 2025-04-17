@@ -1,12 +1,14 @@
-import {useContext, useEffect} from 'react';
+import {useCallback, useContext} from 'react';
 import {useDispatch} from 'react-redux';
 import {login} from '../../../redux/slices/authSlice';
 import {BaseLayoutContext} from '../../../context/layout/base.layout.context';
 import DesignSystem from '../../../design';
-import {useNavigation} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../../navigation/navigation.types';
 import { useTranslation } from 'react-i18next';
+import { createStyles } from './login.styles';
+import { useTheme } from '../../../context/theme.provider';
 
 const useLoginLogic = () => {
   const navigation =
@@ -16,23 +18,25 @@ const useLoginLogic = () => {
     useContext(BaseLayoutContext);
   const {t} = useTranslation();
 
-  useEffect(() => {
-    showLoading?.();
-    updateHeader({
-      title: 'Login',
-      leftIcon: DesignSystem.Icons.home,
-      rightIcon: DesignSystem.Icons.settings,
-      onLeftPress: () => {
-        console.log('Left icon pressed');
-      },
-      onRightPress: () => {
-        console.log('Right icon pressed');
-      },
-    });
-    setTimeout(() => {
-      hideLoading?.();
-    }, 2000);
-  }, []);
+  const theme = useTheme();
+  const styles = createStyles(theme.colors);
+
+  useFocusEffect(
+    useCallback(() => {
+      showLoading?.();
+      updateHeader({
+        title: t('login'),
+        leftIcon: DesignSystem.Icons.anbLogo,
+        rightIcon: null,
+        onLeftPress: () => {
+          console.log('Left icon pressed');
+        },
+      });
+      setTimeout(() => {
+        hideLoading?.();
+      }, 2000);
+    }, [t, updateHeader, dispatch]),
+  );
 
   const handleLogin = () => {
     dispatch(
@@ -52,6 +56,7 @@ const useLoginLogic = () => {
 
   return {
     t,
+    styles,
     handleLogin,
   };
 };

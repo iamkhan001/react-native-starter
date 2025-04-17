@@ -1,36 +1,41 @@
-import {useContext, useEffect} from 'react';
+import {useContext, useCallback} from 'react';
+import {useFocusEffect} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 import DesignSystem from '../../../design';
 import {BaseLayoutContext} from '../../../context/layout/base.layout.context';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../../redux/store';
-import { logout } from '../../../redux/slices/authSlice';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../../navigation/navigation.types';
+import {logout} from '../../../redux/slices/authSlice';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {RootStackParamList} from '../../../navigation/navigation.types';
+import { useTheme } from '../../../context/theme.provider';
+import { createStyles } from './home.styles';
 
 export const useHomeLogic = () => {
-
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const {t} = useTranslation();
   const {updateHeader, getScreenInfo} = useContext(BaseLayoutContext);
   const user = useSelector((state: RootState) => state.auth.user);
   const dispatch = useDispatch();
+  const theme = useTheme();
+  const styles = createStyles(theme.colors);
 
-  useEffect(() => {
-    updateHeader({
-      title: t('Home'),
-      leftIcon: DesignSystem.Icons.home,
-      rightIcon: DesignSystem.Icons.logout,
-      onLeftPress: () => console.log('Menu opened'),
-      onRightPress: () => { dispatch(logout());},
-    });
-
-    return () => {
-      console.log('HomeScreen unmounted');
-    };
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      updateHeader({
+        title: t('home'),
+        leftIcon: DesignSystem.Icons.home,
+        rightIcon: DesignSystem.Icons.logout,
+        onLeftPress: () => console.log('Menu opened'),
+        onRightPress: () => {
+          dispatch(logout());
+          navigation.navigate('Login');
+        },
+      });
+    }, [t, updateHeader, dispatch]),
+  );
 
   const goToButtonExample = () => {
     navigation.navigate('ButtonExample');
@@ -42,6 +47,7 @@ export const useHomeLogic = () => {
 
   return {
     t,
+    styles,
     user,
     getScreenInfo,
     goToButtonExample,

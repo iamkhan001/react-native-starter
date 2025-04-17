@@ -5,21 +5,25 @@ import HomeScreen from '../home/home.ui';
 import SettingsScreen from '../settings/settings.ui';
 import CustomTabBar from './components/CustomTabBar';
 import DesignSystem from '../../../design';
-import { useTranslation } from 'react-i18next';
+import { useDashboardLogic } from './dashboard.logic';
 
 const Tab = createBottomTabNavigator();
 
 const CustomTabBarWrapper = (props: BottomTabBarProps) => {
-  return <CustomTabBar {...props} />;
+  return (
+      <CustomTabBar {...props} />
+  );
 };
 
 const DashboardScreen = () => {
 
-  const {t} = useTranslation();
+  const {theme, t} = useDashboardLogic();
 
   return (
     <Tab.Navigator
-      screenOptions={{headerShown: false}}
+      screenOptions={{
+        headerShown: false,
+      }}
       tabBar={CustomTabBarWrapper}>
       <Tab.Screen
         name="Home"
@@ -27,6 +31,8 @@ const DashboardScreen = () => {
         options={{
           tabBarLabel: t('home'),
           tabBarIcon: DesignSystem.Icons.home,
+          tabBarActiveTintColor: theme.colors.primary,
+          tabBarInactiveTintColor: theme.colors.textSecondary,
         }}
       />
       <Tab.Screen
@@ -35,6 +41,8 @@ const DashboardScreen = () => {
         options={{
           tabBarLabel: t('settings'),
           tabBarIcon: DesignSystem.Icons.settings,
+          tabBarActiveTintColor: theme.colors.primary,
+          tabBarInactiveTintColor: theme.colors.textSecondary,
         }}
       />
     </Tab.Navigator>

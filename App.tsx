@@ -15,9 +15,9 @@ import AppNavigatorStack from './src/navigation/AppNavigatorStack';
 
 import type {ErrorInfo} from './src/components/error/GlobalErrorModal';
 import BaseLayout from './src/components/layout/base/base.layout.ui';
+import {ThemeProvider} from './src/context/theme.provider';
 
 const App: React.FC = () => {
-
   const [errorInfo, setErrorInfo] = useState<ErrorInfo | null>(null);
 
   useEffect(() => {
@@ -39,14 +39,16 @@ const App: React.FC = () => {
         <Provider store={store}>
           <PersistGate loading={null} persistor={persister}>
             <KeyboardProvider>
-              <I18nextProvider i18n={i18n}>
-                <BaseLayout>
-                  <AppNavigatorStack />
-                </BaseLayout>
-                {errorInfo && (
-                  <ErrorModal errorInfo={errorInfo} resetApp={resetApp} />
-                )}
-              </I18nextProvider>
+              <ThemeProvider>
+                <I18nextProvider i18n={i18n}>
+                  <BaseLayout>
+                    <AppNavigatorStack />
+                  </BaseLayout>
+                  {errorInfo && (
+                    <ErrorModal errorInfo={errorInfo} resetApp={resetApp} />
+                  )}
+                </I18nextProvider>
+              </ThemeProvider>
             </KeyboardProvider>
           </PersistGate>
         </Provider>

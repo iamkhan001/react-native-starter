@@ -8,7 +8,7 @@ import {
 import {useSettingsLogic} from './settings.logic';
 
 const SettingScreen = () => {
-  const { styles, t, languages, themes, selectedLanguage, setSelectedLanguage, setSelectedTheme } = useSettingsLogic();
+  const { styles, t, languages, themes, selectedTheme, selectedLanguage, setSelectedLanguage, setSelectedTheme } = useSettingsLogic();
 
   return (
     <View style={styles.container}>
@@ -46,7 +46,7 @@ const SettingScreen = () => {
               style={styles.language}>
               <Text
                 style={
-                  selectedLanguage === item.value
+                  selectedTheme === item.value
                     ? styles.selectedText
                     : styles.text
                 }>

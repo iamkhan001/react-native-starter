@@ -2,6 +2,7 @@ type RootStackParamList = {
     Dashboard: undefined;
     ButtonExample: undefined;
     TextExample: undefined;
+    Login: undefined;
   };
 
 type DashboardTabParamList = {

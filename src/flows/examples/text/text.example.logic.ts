@@ -1,30 +1,32 @@
 
-import {useContext, useEffect} from 'react';
+import {useCallback, useContext} from 'react';
 import {useTranslation} from 'react-i18next';
 import DesignSystem from '../../../design';
 import {BaseLayoutContext} from '../../../context/layout/base.layout.context';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useTheme } from '../../../context/theme.provider';
+import { createStyles } from './text.example.styles';
 
 const useTextExampleLogic = () => {
   const {t} = useTranslation();
   const {updateHeader} = useContext(BaseLayoutContext);
   const navigation = useNavigation();
+  const theme = useTheme();
+  const styles = createStyles(theme.colors);
 
-  useEffect(() => {
-    updateHeader({
-      title: t('textExample'),
-      leftIcon: DesignSystem.Icons.leftArrow,
-      rightIcon: null,
-      onLeftPress: () => navigation.goBack(),
-    });
-
-    return () => {
-      console.log('Screen unmounted');
-    };
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      updateHeader({
+        title: t('textExample'),
+        leftIcon: DesignSystem.Icons.leftArrow,
+        rightIcon: null,
+        onLeftPress: () => navigation.goBack(),
+      });
+    }, [t, updateHeader]));
 
   return {
     t,
+    styles,
   };
 };
 
