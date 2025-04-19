@@ -1,35 +1,42 @@
-import { useCallback, useContext, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import {useCallback, useContext, useEffect, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import RNRestart from 'react-native-restart'; // add this import
-
-import { I18nManager } from 'react-native';
-import { useAppDispatch, useAppSelector } from '@redux/hooks';
-import { setLanguage } from '@redux/slices/languageSlice';
-import { useTheme } from '@context/theme.provider';
-import { BaseLayoutContext } from '@context/layout/base.layout.context';
-import { useFocusEffect } from '@react-navigation/native';
+import {I18nManager} from 'react-native';
+import {persistor} from '@redux/store'; // Adjust this import to match your setup
+import {useAppDispatch, useAppSelector} from '@redux/hooks';
+import {setLanguage} from '@redux/slices/languageSlice';
+import {useTheme} from '@context/theme.provider';
+import {BaseLayoutContext} from '@context/layout/base.layout.context';
+import {useFocusEffect} from '@react-navigation/native';
 import DesignSystem from '@design/index';
-import { logout } from '@redux/slices/authSlice';
+import {logout} from '@redux/slices/authSlice';
 import createStyles from './settings.styles';
-import { ThemeType } from './settings.types';
+import {ThemeType} from './settings.types';
 
 export const useSettingsLogic = () => {
-  const { t } = useTranslation();
+  const {t} = useTranslation();
   const dispatch = useAppDispatch();
-  const lang = useAppSelector(state => state.language.lang);
   const theme = useTheme();
   const [styles, setStyles] = useState(() => createStyles(theme.colors));
   const {updateHeader} = useContext(BaseLayoutContext);
 
   const languages = [
-    { label: t('english'), value: 'en' },
-    { label: t('arabic'), value: 'ar' },
+    {label: t('english'), value: 'en'},
+    {label: t('arabic'), value: 'ar'},
   ];
 
   const themes = [
-    { label: t('lightMode'), value: 'light' } as ThemeType,
-    { label: t('darkMode'), value: 'dark' }  as ThemeType,
+    {label: t('lightMode'), value: 'light'} as ThemeType,
+    {label: t('darkMode'), value: 'dark'} as ThemeType,
   ];
+
+  const lang = useAppSelector(state => state.language.lang);
+
+  useEffect(() => {
+    if (lang) {
+      setSelectedLanguage(lang);
+    }
+  }, [lang]);
 
   const [selectedLanguage, setSelectedLanguage] = useState(lang);
   const [selectedTheme, setSelectedTheme] = useState(theme.theme);
@@ -48,21 +55,27 @@ export const useSettingsLogic = () => {
     }, [t, updateHeader, dispatch]),
   );
 
-
   useEffect(() => {
-    if(selectedLanguage === lang) {
-      return;
-    }
+    if (selectedLanguage === lang) {return;}
+
+    const shouldBeRTL = selectedLanguage === 'ar';
+    const isCurrentlyRTL = I18nManager.isRTL;
+
     dispatch(setLanguage(selectedLanguage));
-    if (selectedLanguage === 'ar') {
-      I18nManager.forceRTL(true);
-      I18nManager.allowRTL(true);
-    } else {
-      I18nManager.forceRTL(false);
-      I18nManager.allowRTL(false);
+
+    if (shouldBeRTL !== isCurrentlyRTL) {
+      setTimeout(() => {
+        I18nManager.forceRTL(shouldBeRTL);
+        I18nManager.allowRTL(shouldBeRTL);
+        // Wait for Redux persist to flush before restarting
+        setTimeout(() => {
+          persistor.flush().then(() => {
+            RNRestart.Restart();
+          });
+        }, 300); // Add slight delay to ensure direction change is scheduled
+      }, 50);
     }
-    RNRestart.Restart();
-  }, [dispatch, selectedLanguage]);
+  }, [selectedLanguage]);
 
   useEffect(() => {
     theme.setTheme(selectedTheme === 'dark' ? 'dark' : 'light');

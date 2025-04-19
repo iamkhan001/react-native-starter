@@ -15,18 +15,23 @@ import {
 } from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const persistConfig = {
-  key: 'root',
+const themePersistConfig = {
+  key: 'theme',
   storage: AsyncStorage,
-  whitelist: ['theme', 'language'],
 };
 
-const persistedReducer = persistReducer(persistConfig, themeReducer);
+const languagePersistConfig = {
+  key: 'language',
+  storage: AsyncStorage,
+};
+
+const persistedLanguageReducer = persistReducer(themePersistConfig, languageReducer);
+const persistedThemeReducer = persistReducer(languagePersistConfig, themeReducer);
 
 export const store = configureStore({
   reducer: {
-    theme: persistedReducer,
-    language: languageReducer,
+    theme: persistedThemeReducer,
+    language: persistedLanguageReducer,
     auth: authReducer,
   },
   middleware: getDefaultMiddleware =>
@@ -37,6 +42,6 @@ export const store = configureStore({
     }),
 });
 
-export const persister = persistStore(store);
+export const persistor = persistStore(store);
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

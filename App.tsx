@@ -6,9 +6,7 @@ import {
 } from 'react-native-safe-area-context';
 import {PersistGate} from 'redux-persist/integration/react';
 import {KeyboardProvider} from 'react-native-keyboard-controller';
-import {I18nextProvider} from 'react-i18next';
-import i18n from './src/translations/i18n';
-import {store, persister} from './src/redux/store';
+import {store, persistor} from './src/redux/store';
 import ErrorModal from './src/components/error/GlobalErrorModal';
 import ErrorBoundary from './src/components/error/ErrorBoundary';
 import AppNavigatorStack from './src/navigation/AppNavigatorStack';
@@ -16,6 +14,7 @@ import AppNavigatorStack from './src/navigation/AppNavigatorStack';
 import type {ErrorInfo} from './src/components/error/GlobalErrorModal';
 import BaseLayout from './src/components/layout/base/base.layout.ui';
 import {ThemeProvider} from './src/context/theme.provider';
+import {LanguageProvider} from './src/context/language.provider';
 
 const App: React.FC = () => {
   const [errorInfo, setErrorInfo] = useState<ErrorInfo | null>(null);
@@ -37,17 +36,17 @@ const App: React.FC = () => {
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
       <ErrorBoundary>
         <Provider store={store}>
-          <PersistGate loading={null} persistor={persister}>
+          <PersistGate loading={null} persistor={persistor}>
             <KeyboardProvider>
               <ThemeProvider>
-                <I18nextProvider i18n={i18n}>
+                <LanguageProvider>
                   <BaseLayout>
                     <AppNavigatorStack />
                   </BaseLayout>
                   {errorInfo && (
                     <ErrorModal errorInfo={errorInfo} resetApp={resetApp} />
                   )}
-                </I18nextProvider>
+                </LanguageProvider>
               </ThemeProvider>
             </KeyboardProvider>
           </PersistGate>

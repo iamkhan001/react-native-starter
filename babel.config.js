@@ -4,7 +4,7 @@ module.exports = function (api) {
   const env = process.env.APP_ENV || 'development';
 
   return {
-    presets: ['module:metro-react-native-babel-preset'],
+    presets: ['@react-native/babel-preset'],
     plugins: [
       'react-native-reanimated/plugin',
       [

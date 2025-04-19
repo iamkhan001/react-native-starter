@@ -35,7 +35,7 @@ const SettingScreen = () => {
         />
       </View>
       <View style={styles.settings}>
-        <Text style={styles.title}> {t('changeTheme')}</Text>
+        <Text style={styles.title}>{t('changeTheme')}</Text>
         <FlatList
           data={themes}
           renderItem={({item}) => (
