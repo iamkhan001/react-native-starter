@@ -1,147 +1,106 @@
-import React, {Component} from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import {
   View,
   Text,
   TouchableOpacity,
   Image,
-  Dimensions,
-  Platform,
 } from 'react-native';
-import {
-  RootLayoutProps,
-  RootLayoutState,
-  ScreenInfo,
-} from './base.layout.types';
 import {
   BaseHeaderConfig,
   BaseLayoutContext,
-} from '../../../context/layout/base.layout.context';
+} from '@context/layout/base.layout.context';
+import { RawThemeContext } from '@context/theme.provider';
+import DesignSystem from '@design/index';
+import LightColors from '@theme/colors/LightColors';
 import createStyles from './base.layout.styles';
-import {RawThemeContext} from '../../../context/theme.provider';
-import DesignSystem from '../../../design';
-import LightColors from '../../../theme/colors/LightColors';
+import { RootLayoutProps } from './base.layout.types';
 
-class BaseLayout extends Component<RootLayoutProps, RootLayoutState> {
-  static contextType = RawThemeContext;
+const BaseLayout: React.FC<RootLayoutProps> = ({ children }) => {
+  const theme = useContext(RawThemeContext);
+  const [styles, setStyles] = useState(createStyles(LightColors));
+  const [header, setHeader] = useState<BaseHeaderConfig>({
+    title: '',
+    leftIcon: '',
+    rightIcon: '',
+    onLeftPress: () => {},
+    onRightPress: () => {},
+  });
+  const [isLoading, setIsLoading] = useState(false);
 
-  constructor(props: RootLayoutProps) {
-    super(props);
+  const updateHeader = useCallback((config: BaseHeaderConfig) => {
+    setHeader(prev => ({ ...prev, ...config }));
+  }, []);
 
-    const styles = createStyles(LightColors);
+  const showLoading = useCallback(() => setIsLoading(true), []);
+  const hideLoading = useCallback(() => setIsLoading(false), []);
 
-    this.state = {
-      header: {
-        title: '',
-        leftIcon: '',
-        rightIcon: '',
-        onLeftPress: () => {},
-        onRightPress: () => {},
-      },
-      isLoading: false,
-      styles: styles,
+  useEffect(() => {
+    const updatedStyles = createStyles(theme.colors);
+    setStyles(updatedStyles);
+  }, [theme]);
+
+  useEffect(() => {
+    const onMount = () => {};
+    const onRender = () => {};
+    onMount?.();
+    onRender?.();
+
+    return () => {
+      const onUnmount = () => {};
+      onUnmount?.();
     };
-  }
+  }, []);
 
-  updateHeader = (config: BaseHeaderConfig) => {
-    this.setState({header: {...this.state.header, ...config}});
-  };
+  const { title, leftIcon, rightIcon, onLeftPress, onRightPress } = header;
 
-  componentDidMount() {
-    const theme = this.context as React.ContextType<typeof RawThemeContext>;
-    const styles = createStyles(theme.colors);
-    this.setState({styles});
-    this.state.onMount?.();
-    this.state.onRender?.();
-  }
-
-  componentDidUpdate(prevProps: RootLayoutProps, prevState: RootLayoutState) {
-    const currentTheme = this.context as React.ContextType<
-      typeof RawThemeContext
-    >;
-
-    if (
-      prevState.styles?.container?.backgroundColor !==
-      currentTheme.colors?.background
-    ) {
-      const updatedStyles = createStyles(currentTheme.colors);
-      this.setState({styles: updatedStyles});
-    }
-  }
-
-  componentWillUnmount() {
-    this.state.onUnmount?.();
-  }
-
-  componentDidCatch(error: Error) {
-    this.state.onError?.(error);
-  }
-
-  showLoading = () => this.setState({isLoading: true});
-
-  hideLoading = () => this.setState({isLoading: false});
-
-  getScreenInfo = (): ScreenInfo => {
-    const {width, height} = Dimensions.get('window');
-    return {
-      width,
-      height,
-      platform: Platform.OS,
-    };
-  };
-
-  render() {
-    const {children} = this.props;
-    const {title, leftIcon, rightIcon, onLeftPress, onRightPress} =
-      this.state.header;
-
-    return (
-      <BaseLayoutContext.Provider
-        value={{
-          updateHeader: this.updateHeader,
-          showLoading: this.showLoading,
-          hideLoading: this.hideLoading,
-          isLoading: this.state.isLoading,
-        }}>
-        <View style={this.state.styles.container}>
-          {/* Header */}
-          <View style={this.state.styles.header}>
-            {leftIcon && (
-              <TouchableOpacity onPress={onLeftPress}>
-                <Image
-                  source={
-                    typeof leftIcon === 'string' ? {uri: leftIcon} : leftIcon
-                  }
-                  style={this.state.styles.icon}
-                />
-              </TouchableOpacity>
-            )}
-            <Text style={this.state.styles.title}>{title}</Text>
-            {rightIcon ? (
-              <TouchableOpacity onPress={onRightPress}>
-                <Image
-                  source={
-                    typeof rightIcon === 'string' ? {uri: rightIcon} : rightIcon
-                  }
-                  style={this.state.styles.icon}
-                />
-              </TouchableOpacity>
-            ) : (
-              <View style={{width: DesignSystem.Sizes.headerIconSize}} />
-            )}
-          </View>
-
-          {/* Main Content */}
-          {children}
-          {/* Show loading */}
-          {this.state.isLoading && (
-            <View style={this.state.styles.loadingOverlay}>
-              <Text style={this.state.styles.title}>Loading...</Text>
-            </View>
+  return (
+    <BaseLayoutContext.Provider
+      value={{
+        updateHeader,
+        showLoading,
+        hideLoading,
+        isLoading,
+      }}>
+      <View style={styles.container}>
+        {/* Header */}
+        <View style={styles.header}>
+          {leftIcon && (
+            <TouchableOpacity onPress={onLeftPress}>
+              <Image
+                source={
+                  typeof leftIcon === 'string' ? { uri: leftIcon } : leftIcon
+                }
+                style={styles.icon}
+              />
+            </TouchableOpacity>
+          )}
+          <Text style={styles.title}>{title}</Text>
+          {rightIcon ? (
+            <TouchableOpacity onPress={onRightPress}>
+              <Image
+                source={
+                  typeof rightIcon === 'string' ? { uri: rightIcon } : rightIcon
+                }
+                style={styles.icon}
+              />
+            </TouchableOpacity>
+          ) : (
+            <View style={{ width: DesignSystem.Sizes.headerIconSize }} />
           )}
         </View>
-      </BaseLayoutContext.Provider>
-    );
-  }
-}
+
+        {/* Main Content */}
+        {children}
+
+        {/* Show loading */}
+        {isLoading && (
+          <View style={styles.loadingOverlay}>
+            <Text style={styles.title}>Loading...</Text>
+          </View>
+        )}
+      </View>
+    </BaseLayoutContext.Provider>
+  );
+};
 
 export default BaseLayout;

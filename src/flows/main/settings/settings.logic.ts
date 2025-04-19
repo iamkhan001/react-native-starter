@@ -1,15 +1,17 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import RNRestart from 'react-native-restart'; // add this import
+
 import { I18nManager } from 'react-native';
-import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
-import { setLanguage } from '../../../redux/slices/languageSlice';
-import { useTheme } from '../../../context/theme.provider';
+import { useAppDispatch, useAppSelector } from '@redux/hooks';
+import { setLanguage } from '@redux/slices/languageSlice';
+import { useTheme } from '@context/theme.provider';
+import { BaseLayoutContext } from '@context/layout/base.layout.context';
+import { useFocusEffect } from '@react-navigation/native';
+import DesignSystem from '@design/index';
+import { logout } from '@redux/slices/authSlice';
 import createStyles from './settings.styles';
 import { ThemeType } from './settings.types';
-import { BaseLayoutContext } from '../../../context/layout/base.layout.context';
-import { useFocusEffect } from '@react-navigation/native';
-import DesignSystem from '../../../design';
-import { logout } from '../../../redux/slices/authSlice';
 
 export const useSettingsLogic = () => {
   const { t } = useTranslation();
@@ -46,7 +48,11 @@ export const useSettingsLogic = () => {
     }, [t, updateHeader, dispatch]),
   );
 
+
   useEffect(() => {
+    if(selectedLanguage === lang) {
+      return;
+    }
     dispatch(setLanguage(selectedLanguage));
     if (selectedLanguage === 'ar') {
       I18nManager.forceRTL(true);
@@ -55,6 +61,7 @@ export const useSettingsLogic = () => {
       I18nManager.forceRTL(false);
       I18nManager.allowRTL(false);
     }
+    RNRestart.Restart();
   }, [dispatch, selectedLanguage]);
 
   useEffect(() => {

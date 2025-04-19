@@ -1,4 +1,4 @@
-import { BaseHeaderConfig } from '../../../context/layout/base.layout.context';
+import { BaseHeaderConfig } from '@context/layout/base.layout.context';
 import { ViewStyle, TextStyle, ImageStyle } from 'react-native';
 
 interface RootLayoutStyles {

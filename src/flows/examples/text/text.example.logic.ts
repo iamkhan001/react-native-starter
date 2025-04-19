@@ -1,11 +1,11 @@
 
 import {useCallback, useContext} from 'react';
 import {useTranslation} from 'react-i18next';
-import DesignSystem from '../../../design';
-import {BaseLayoutContext} from '../../../context/layout/base.layout.context';
+import DesignSystem from '@design/index';
+import {BaseLayoutContext} from '@context/layout/base.layout.context';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import { useTheme } from '../../../context/theme.provider';
-import { createStyles } from './text.example.styles';
+import { useTheme } from '@context/theme.provider';
+import { createStyles } from './login.styles';
 
 const useTextExampleLogic = () => {
   const {t} = useTranslation();

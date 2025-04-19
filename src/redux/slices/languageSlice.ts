@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import i18n from '../../translations/i18n';
+import i18n from '@translations/i18n';
 
 interface LanguageState {
   lang: string;

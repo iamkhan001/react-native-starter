@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
-import ThemeColors from '../../../theme/types';
-import DesignSystem from '../../../design';
+import ThemeColors from '@theme/types';
+import DesignSystem from '@design/index';
 
 const createStyles = (theme: ThemeColors) => {
   return StyleSheet.create({

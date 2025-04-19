@@ -20,6 +20,18 @@ end
 target 'anb' do
   config = use_native_modules!
 
+  # Ensure you match all build configurations
+  project 'anb', {
+    'Debug' => :debug,
+    'Debug-dev' => :debug,   
+    'Debug-staging' => :debug,
+    'Release' => :release,
+    'Release-prod' => :release,
+  }
+
+  pod 'react-native-config', :path => '../node_modules/react-native-config'
+  #pod 'RNI18n', :path => '../node_modules/react-native-i18n'
+
   use_react_native!(
     :path => config[:reactNativePath],
     # An absolute path to your application root.

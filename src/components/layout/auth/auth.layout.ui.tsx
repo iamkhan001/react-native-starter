@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import BaseLayout from '../base/base.layout.ui';
-import { RootState } from '../../../redux/store';
+import BaseLayout from '@components/layout/base/base.layout.ui';
+import { RootState } from '@redux/store';
 import { connect } from 'react-redux';
-import { BaseHeaderConfig } from '../../../context/layout/base.layout.context';
-import { AuthLayoutContext } from '../../../context/layout/auth.layout.context';
+import { BaseHeaderConfig } from '@context/layout/base.layout.context';
+import { AuthLayoutContext } from '@context/layout/auth.layout.context';
 
 interface AuthLayoutProps {
   children: React.ReactNode;

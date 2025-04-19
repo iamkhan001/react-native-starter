@@ -1,15 +1,15 @@
 import {useContext, useCallback} from 'react';
-import {useFocusEffect} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
-import DesignSystem from '../../../design';
-import {BaseLayoutContext} from '../../../context/layout/base.layout.context';
 import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from '../../../redux/store';
-import {logout} from '../../../redux/slices/authSlice';
+import {useFocusEffect} from '@react-navigation/native';
+import DesignSystem from '@design/index';
+import {BaseLayoutContext} from '@context/layout/base.layout.context';
+import {RootState} from '@redux/store';
+import {logout} from '@redux/slices/authSlice';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {RootStackParamList} from '../../../navigation/navigation.types';
-import { useTheme } from '../../../context/theme.provider';
+import {RootStackParamList} from '@navigation/navigation.types';
+import { useTheme } from '@context/theme.provider';
 import { createStyles } from './home.styles';
 
 export const useHomeLogic = () => {

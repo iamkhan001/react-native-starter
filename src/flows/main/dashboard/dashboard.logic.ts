@@ -1,5 +1,5 @@
 import {useTranslation} from 'react-i18next';
-import {useTheme} from '../../../context/theme.provider';
+import {useTheme} from '@context/theme.provider';
 
 const useDashboardLogic = () => {
   const theme = useTheme();

@@ -1,9 +1,9 @@
 import React from 'react';
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 import {StyleSheet, View} from 'react-native';
+import ThemeColors from '@theme/types';
+import {useTheme} from '@context/theme.provider';
 import TabBarItem from './TabBarItem';
-import ThemeColors from '../../../../theme/types';
-import {useTheme} from '../../../../context/theme.provider';
 
 const CustomTabBar: React.FC<BottomTabBarProps> = ({
   state,

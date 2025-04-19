@@ -1,9 +1,9 @@
 import {useCallback, useContext} from 'react';
 import {useTranslation} from 'react-i18next';
-import DesignSystem from '../../../design';
-import {BaseLayoutContext} from '../../../context/layout/base.layout.context';
+import DesignSystem from '@design/index';
+import {BaseLayoutContext} from '@context/layout/base.layout.context';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import { useTheme } from '../../../context/theme.provider';
+import { useTheme } from '@context/theme.provider';
 import { createStyles } from './button.example.styles';
 
 export const useButtonExampleLogic = () => {
@@ -12,6 +12,10 @@ export const useButtonExampleLogic = () => {
   const navigation = useNavigation();
   const theme = useTheme();
   const styles = createStyles(theme.colors);
+
+  const onButtonPress = () => {
+    console.log('onButtonPress');
+  };
 
   useFocusEffect(
     useCallback(() => {
@@ -26,5 +30,6 @@ export const useButtonExampleLogic = () => {
   return {
     t,
     styles,
+    onButtonPress,
   };
 };

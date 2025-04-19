@@ -1,8 +1,8 @@
 import React, { createContext, useContext } from 'react';
-import { Themes, ThemeType } from '../theme';
+import { Themes, ThemeType } from '@theme/index';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../redux/store';
-import { setTheme } from '../redux/slices/themeSlice';
+import { RootState } from '@redux/store';
+import { setTheme } from '@redux/slices/themeSlice';
 
 const ThemeContext = createContext({
   theme: 'light' as ThemeType,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScreenInfo } from '../../components/layout/base/base.layout.types';
+import { ScreenInfo } from '@components/layout/base/base.layout.types';
 
 type BaseHeaderConfig = {
     title: string;

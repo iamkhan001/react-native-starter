@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
-import { useTheme } from '../../../../context/theme.provider';
+import { useTheme } from '@context/theme.provider';
 
 interface TabBarItemProps {
   label: string;

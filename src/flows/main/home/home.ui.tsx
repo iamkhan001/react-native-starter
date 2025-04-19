@@ -1,6 +1,6 @@
 import { Button, Text, View } from 'react-native';
-import ENV from '../../../config/env';
 import { useHomeLogic } from './home.logic';
+import { ENVIRONMENT_NAME } from '@env';
 
 const HomeScreen = () => {
 
@@ -8,7 +8,7 @@ const HomeScreen = () => {
 
   return (
       <View style={styles.container}>
-        <Text style={styles.text}>{t('welcome')} {user?.firstName ?? 'Guest'} - {ENV.environment}</Text>
+        <Text style={styles.text}>{t('welcome')} {user?.firstName ?? 'Guest'} {ENVIRONMENT_NAME || '---'}</Text>
         <Text style={styles.text}>{t('screenInfo')}</Text>
         <Text style={styles.text}>{getScreenInfo?.()?.width} x {getScreenInfo?.()?.height}</Text>
         <Text style={styles.text}>{t('platform')}</Text>

@@ -1,11 +1,11 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
-import HomeScreen from '../home/home.ui';
-import SettingsScreen from '../settings/settings.ui';
-import CustomTabBar from './components/CustomTabBar';
-import DesignSystem from '../../../design';
+import HomeScreen from '@flows/main/home/home.ui';
+import SettingsScreen from '@flows/main/settings/settings.ui';
+import DesignSystem from '@design/index';
 import { useDashboardLogic } from './dashboard.logic';
+import CustomTabBar from './components/CustomTabBar';
 
 const Tab = createBottomTabNavigator();
 

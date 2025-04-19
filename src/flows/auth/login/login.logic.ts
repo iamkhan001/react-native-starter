@@ -1,14 +1,14 @@
 import {useCallback, useContext} from 'react';
 import {useDispatch} from 'react-redux';
-import {login} from '../../../redux/slices/authSlice';
-import {BaseLayoutContext} from '../../../context/layout/base.layout.context';
-import DesignSystem from '../../../design';
+import { useTranslation } from 'react-i18next';
+import {login} from '@redux/slices/authSlice';
+import {BaseLayoutContext} from '@context/layout/base.layout.context';
+import DesignSystem from '@design/index';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {RootStackParamList} from '../../../navigation/navigation.types';
-import { useTranslation } from 'react-i18next';
+import {RootStackParamList} from '@navigation/navigation.types';
+import { useTheme } from '@context/theme.provider';
 import { createStyles } from './login.styles';
-import { useTheme } from '../../../context/theme.provider';
 
 const useLoginLogic = () => {
   const navigation =

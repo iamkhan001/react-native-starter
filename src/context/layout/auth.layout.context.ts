@@ -1,5 +1,5 @@
 import React from 'react';
-import { User } from '../auth/auth.types';
+import { User } from '@context/auth/auth.types';
 import { BaseHeaderConfig, BaseLayoutContextType } from './base.layout.context';
 
 type AuthLayoutContextType = {

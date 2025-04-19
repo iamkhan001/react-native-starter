@@ -1,5 +1,5 @@
 import { Dimensions, Platform } from 'react-native';
-import { ScreenInfo } from '../components/layout/base/base.layout.types';
+import { ScreenInfo } from '@components/layout/base/base.layout.types';
 
 
 const getScreenInfo = (): ScreenInfo => {

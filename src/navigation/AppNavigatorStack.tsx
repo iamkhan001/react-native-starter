@@ -2,13 +2,13 @@ import React from 'react';
 import {useSelector} from 'react-redux';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {RootState} from '../redux/store';
+import {RootState} from '@redux/store';
 
-import LoginScreen from '../flows/auth/login/login.ui';
-import RegisterScreen from '../flows/auth/register/register.ui';
-import DashboardScreen from '../flows/main/dashboard/dashboard.ui';
-import ButtonExampleScreen from '../flows/examples/buttons/button.example.ui';
-import TextExampleScreen from '../flows/examples/text/text.example.ui';
+import LoginScreen from '@flows/auth/login/login.ui';
+import RegisterScreen from '@flows/auth/register/register.ui';
+import DashboardScreen from '@flows/main/dashboard/dashboard.ui';
+import ButtonExampleScreen from '@flows/examples/buttons/button.example.ui';
+import TextExampleScreen from '@flows/examples/text/text.example.ui';
 
 const Stack = createNativeStackNavigator();
 

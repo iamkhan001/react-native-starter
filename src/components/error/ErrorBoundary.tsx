@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
-import ENV from '../../config/env';
+import {ENVIRONMENT_NAME} from '@env';
 
 interface ErrorBoundaryProps {
   children: React.ReactNode;
@@ -34,7 +34,7 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
 
   isEnabled(): boolean {
     return (
-      ENV.environment === 'development' || ENV.environment === 'uat'
+      ENVIRONMENT_NAME === 'development' || ENVIRONMENT_NAME === 'uat'
     );
   }
 
